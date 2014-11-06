@@ -1,28 +1,23 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+在大学的第四个年头刚开始，学了rails。后来又突发奇想想把教务处数据弄成来，做到微信公众平台上。
 
-Things you may want to cover:
+想法是很好滴，我也努力这么做。也努力做着，顺便学了一遍公众平台上。
 
-* Ruby version
+那会我搭建校内和校外链接的通道，可以让外网访问内网教务处。可惜最后和老师协商，教务处数据拿不到。。
 
-* System dependencies
+就这样的不忍心放弃了。
 
-* Configuration
+工作后的今天2014-11-06一个不平常的夜晚: I find the way to the hell。于是我就开始了大学未完成的“项目”
 
-* Database creation
+未来的初步打算：
 
-* Database initialization
+* 把教务处数据爬出来：课表，个人信息，考试信息，成绩
 
-* How to run the test suite
+* 排和找课表，查空教室，找同学，找头像（共青在线）
 
-* Services (job queues, cache servers, search engines, etc.)
+* 和我之前的微信公众帐号联系，对外提供更方便的查询方式
 
-* Deployment instructions
-
-* ...
+* 班车路线啥的扩展功能加进去就更棒了！
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
