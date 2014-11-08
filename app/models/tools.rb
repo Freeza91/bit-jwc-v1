@@ -91,9 +91,42 @@ class Tools
   end
 
   def self.parse_schedule_list res
+    doc = Nokogiri::XML.parse res.body
+    doc = doc.children.children.children #document-> Envelope-> Body
+    doc = doc.children.children #GetScheduleListResponse -> GetScheduleListResult
+    p doc.size
+    i = 0
+    doc.each do |e|
+      i += 1
+      sub = e.children
+      if i > 14 && !sub[0].nil?
+        p sub[2].text #开始上课小节
+        p sub[3].text #课程名字
+        p sub[4].text #老师
+        p sub[5].text #地点
+        p sub[7].text #上课时间
+        p sub[9].text #班号
+        p sub[10].text#班名字
+        p sub[11].text#上课周期
+      end
+      p "*" * 30
+    end
   end
 
   def self.parse_news_list res
+    doc = Nokogiri::XML.parse res.body
+    doc = doc.children.children.children #document-> Envelope-> Body
+    doc = doc.children.children #GetNewsListResponse -> GetNewsListResult
+    p doc.size
+    doc.each do |e|
+      sub = e.children
+      p sub[1].text #类别
+      p sub[3].text #标题
+      p sub[6].text #时间
+      p sub[7].text #简介
+      p sub[8].text #详情地址url
+      p "*" * 30
+    end
   end
 
   def self.parse_school_tel res
