@@ -1,6 +1,6 @@
 class TestController < ApplicationController
   def index
-    Infors.login("王心园", '1120123500')
+    Infors.get_study_status(40689)
     render :text => "success"
   end
 end
