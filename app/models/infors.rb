@@ -9,15 +9,18 @@ class Infors
     uri = URI Settings.host
     http = Net::HTTP.new(uri.host, uri.port)
     header = {'Content-Type' => 'text/xml; charset=utf-8'}
-    p xml
-    p http.post(path, xml, header)
+    http.post(path, xml, header)
   end
 
-  def self.login
-    xml = Settings.login_username + Settings.login_password + Settings.login_infor
+  def self.login(username, password)
+    xml =  Settings.header
+    xml += Settings.login_username % {:username => username}
+    xml += Settings.login_password % {:password => password}
+    xml += Settings.login_infor
+    xml += Settings.footer
     path = Settings.service_post
     res = init(path, xml)
-    parse_login res
+    Tools.parse_login res
   end
 
   def self.get_study_status(num)
@@ -38,43 +41,42 @@ class Infors
     xml = Settings.header + Settings.exam % {:student_num => num} + Settings.footer
     path = Settings.key_post
     res = init(path, xml)
-    parse_exam res
+    Tools.parse_exam res
   end
 
   def self.grade(num)
     xml = Settings.header + Settings.grade % {:student_num => num} + Settings.footer
     path = Settings.key_post
     res = init(path, xml)
-    parse_grade res
+    Tools.parse_grade res
   end
 
   def self.today_list(num)
     xml = Settings.header + Settings.today_list % {:student_num => num} + Settings.footer
     path = Settings.key_post
-
     res = init(path, xml)
-    parse_today_list res
+    Tools.parse_today_list res
   end
 
   def self.schedule_list(num)
     xml = Settings.header + Settings.schedule_list % {:student_num => num} + Settings.footer
     path = Settings.key_post
     res = init(path, xml)
-    parse_schedule_list res
+    Tools.parse_schedule_list res
   end
 
   def self.news_list
     xml = Settings.header + Settings.news_list + Settings.footer
     path = Settings.key_post
     res = init(path, xml)
-    parse_news_list res
+    Tools.parse_news_list res
   end
 
   def self.school_tel
     xml = Settings.header + Settings.schedule_list % {:student_num => 49753} + Settings.footer
     path = Settings['tel_post']
     res = init(path, xml)
-    parse_school_tel res
+    Tools.parse_school_tel res
   end
 
 end

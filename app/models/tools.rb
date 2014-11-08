@@ -2,15 +2,13 @@ require 'nokogiri'
 
 class Tools
 
-
   def self.parse_login res
-    p res
     doc = Nokogiri::XML.parse res.body
     doc = doc.children.children.children #document-> Envelope-> Body p doc
     p '-' * 30
     doc = doc.children.children #loginverifystudent_BResponse -> loginverifystudent_BResult
-    p umcid = doc[2]
-    p contract = doc[6]
+    p umcid = doc[2].text
+    p contract = doc[6].text
   end
 
   def self.parse_study_status res
