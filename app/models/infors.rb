@@ -73,7 +73,7 @@ class Infors
   end
 
   def self.school_tel
-    xml = Settings.header + Settings.schedule_list % {:student_num => 49753} + Settings.footer
+    xml = Settings.header + Settings.school_tel % {:student_num => 49753} + Settings.footer
     path = Settings['tel_post']
     res = init(path, xml)
     Tools.parse_school_tel res

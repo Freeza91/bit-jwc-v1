@@ -130,6 +130,13 @@ class Tools
   end
 
   def self.parse_school_tel res
+    doc = Nokogiri::XML.parse res.body
+    doc = doc.children.children.children #document-> Envelope-> Body
+    doc = doc.children.children #getDeptPhoneByPage_SResponse -> getDeptPhoneByPage_SResult
+    doc.each do |e|
+      sub = e.children
+      p sub.text unless sub.nil? || sub.text.size.zero? #电话
+    end
   end
 
   def is_right? status
