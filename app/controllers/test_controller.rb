@@ -1,6 +1,6 @@
 class TestController < ApplicationController
   def index
-    Infors.get_study_status(40689)
+    Infors.next_lesson(40689)
     render :text => "success"
   end
 end

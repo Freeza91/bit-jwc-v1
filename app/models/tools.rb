@@ -51,6 +51,16 @@ class Tools
   end
 
   def self.parse_next_lesson res
+    doc = Nokogiri::XML.parse res.body
+    doc = doc.children.children.children #document-> Envelope-> Body
+    doc = doc.children.children #NexttermyLessonResponse -> NexttermyLessonResult
+    p doc.size
+    doc.each do |e|
+    sub = e.children
+      p sub[0].text #课程代码
+      p sub[1].text #课程名字
+    end
+
   end
 
   def self.parse_exam res
