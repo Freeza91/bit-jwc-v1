@@ -64,6 +64,15 @@ class Tools
   end
 
   def self.parse_exam res
+    doc = Nokogiri::XML.parse res.body
+    doc = doc.children.children.children #document-> Envelope-> Body
+    doc = doc.children.children #ExamResponse -> ExamResult
+    p doc.size
+    doc.each do |e|
+      sub = e.children
+      p sub[0].text #考试名字
+      p sub[1].text #考试时间和地点
+    end
   end
 
   def self.parse_grade res
