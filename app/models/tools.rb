@@ -76,6 +76,15 @@ class Tools
   end
 
   def self.parse_grade res
+    doc = Nokogiri::XML.parse res.body
+    doc = doc.children.children.children #document-> Envelope-> Body
+    doc = doc.children.children #MarkResponse -> MarkResult
+    p doc.size
+    doc.each do |e|
+      sub = e.children
+      p sub[0].text #科目
+      p sub[1].text #成绩
+    end
   end
 
   def self.parse_today_list res
