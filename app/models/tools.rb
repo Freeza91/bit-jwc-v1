@@ -111,6 +111,7 @@ class Tools
         p sub[3].text #课程名字
         p sub[4].text #老师
         p sub[5].text #地点
+        p sub[6].text #星期
         p sub[7].text #上课时间
         p sub[9].text #班号
         p sub[10].text#班名字
