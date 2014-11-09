@@ -24,8 +24,7 @@ gem 'carrierwave-qiniu'
 gem 'mini_magick'
 
 #数据库
-#gem "mongoid", "~> 4.0.0"
-gem 'mysql2'
+gem "mongoid", "~> 4.0.0"
 
 # Use unicorn as the app server
 # gem 'unicorn'
