@@ -2,7 +2,7 @@ require 'rufus-scheduler'
 class Main
 
   def start
-    p Uploader.new.upload("xxxxxxxx.jpg")
+    #Uploader.new.upload("xxxxxxxx.jpg")
 =begin
     @s = Rufus::Scheduler.new
     left = 40689#Settings.student_num_start.to_i
