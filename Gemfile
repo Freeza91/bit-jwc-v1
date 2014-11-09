@@ -19,12 +19,13 @@ gem 'swagger-ui_rails'
 
 #头像
 gem 'qiniu-rs'
-gem 'carrierwave'
-gem 'carrierwave-qiniu'
 gem 'mini_magick'
 
 #数据库
 gem "mongoid", "~> 4.0.0"
+
+#定时任务
+gem 'rufus-scheduler'
 
 # Use unicorn as the app server
 # gem 'unicorn'
