@@ -15,12 +15,14 @@ class Tools
     doc = Nokogiri::XML.parse res.body
     doc = doc.children.children.children #document-> Envelope-> Body
     doc = doc.children.children #loginverifystudent_BResponse -> StudyStateResultp
-
+    person = {}
     p doc[0].children[0].text #姓名-key
     p doc[0].children[1].text #姓名-value
+    person['username'] = doc[0].children[1].text
     p '-' * 30
     p doc[1].children[0].text #学号
     p doc[1].children[1].text #
+    person['password'] = doc[1].children[1].text
     p '-' * 30
     p doc[2].children[0].text #性别
     p doc[2].children[1].text #
@@ -48,6 +50,7 @@ class Tools
     p '-' * 30
     p doc[10].children[0].text #曾经不及格课程总学分
     p doc[10].children[1].text #
+    person
   end
 
   def self.parse_next_lesson res
@@ -116,8 +119,8 @@ class Tools
         p sub[9].text #班号
         p sub[10].text#班名字
         p sub[11].text#上课周期
+        p "*" * 30
       end
-      p "*" * 30
     end
   end
 
