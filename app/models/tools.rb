@@ -7,8 +7,17 @@ class Tools
     doc = doc.children.children.children #document-> Envelope-> Body p doc
     p '-' * 30
     doc = doc.children.children #loginverifystudent_BResponse -> loginverifystudent_BResult
-    p umcid = doc[2].text
-    p contract = doc[6].text
+    login_infor = {}
+    begin
+      p umcid = doc[2].text
+      login_infor['umcid'] = umcid
+      p contract = doc[6].text
+      login_infor['contract'] = contract
+      login_infor['code'] = "succeed"
+    rescue Exception
+      login_infor['code'] = "faild"
+    end
+    login_infor
   end
 
   def self.parse_study_status res
@@ -30,25 +39,25 @@ class Tools
       person['academy'] = doc[3].children[1].text
       p '-' * 30
       p doc[4].children[1].text #专业
-      person['profession'] = doc[1].children[1].text
+      person['profession'] = doc[4].children[1].text
       p '-' * 30
       p doc[5].children[1].text #班级
-      person['class_num'] = doc[1].children[1].text
+      person['class_num'] = doc[5].children[1].text
       p '-' * 30
       p doc[6].children[1].text #入学时间
-      person['begin_time'] = doc[1].children[1].text
+      person['begin_time'] = doc[6].children[1].text
       p '-' * 30
       p doc[7].children[1].text #学制
-      person['period'] = doc[1].children[1].text
+      person['period'] = doc[7].children[1].text
       p '-' * 30
       p doc[8].children[1].text #学分情况
-      person['grade'] = doc[1].children[1].text
+      person['grade'] = doc[8].children[1].text
       p '-' * 30
       p doc[9].children[1].text #仍未通过课程
-      person['no_grade_record'] = doc[1].children[1].text
+      person['no_grade_record'] = doc[9].children[1].text
       p '-' * 30
       p doc[10].children[1].text #曾经不及格课程总学分
-      person['no_grade'] = doc[1].children[1].text
+      person['no_grade'] = doc[10].children[1].text
     rescue Exception
     else
     end
