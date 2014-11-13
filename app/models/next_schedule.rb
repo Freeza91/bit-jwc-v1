@@ -4,5 +4,5 @@ class NextSchedules
   field :name,        type:String
   field :code,        type:String
 
-  has_and_belongs_to_many :persons
+  embedded_in :person
 end

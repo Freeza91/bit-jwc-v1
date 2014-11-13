@@ -24,5 +24,6 @@ class Person
   validates :password,      presence: true
 
   has_and_belongs_to_many :schedules
+  embeds_many :next_schedules
 
 end
