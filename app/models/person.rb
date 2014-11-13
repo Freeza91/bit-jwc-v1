@@ -20,11 +20,11 @@ class Person
 
   field :last_login,  type:DateTime
 
+  embeds_many :next_schedules
 
   validates :name,          presence: true
   validates :password,      presence: true
 
   has_and_belongs_to_many :schedules
-  embeds_many :next_schedules
 
 end

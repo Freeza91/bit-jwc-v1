@@ -1,4 +1,4 @@
-class NextSchedules
+class NextSchedule
   include Mongoid::Document
 
   field :name,        type:String
