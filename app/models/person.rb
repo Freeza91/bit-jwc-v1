@@ -10,12 +10,13 @@ class Person
   field :password,    type:String
 
   field :class_num,   type:String
-  field :acdemy,      type:String
+  field :academy,     type:String
   field :profession,  type:String
   field :period,      type:String
   field :begin_time,  type:String
   field :grade,       type:String
   field :no_grade,    type:String
+  field :no_grade_recode, type:String
 
   field :last_login,  type:DateTime
 
