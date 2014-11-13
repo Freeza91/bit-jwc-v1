@@ -9,5 +9,8 @@ class Schedule
   field :week,        type:String
   field :weeknum,     type:String
 
+  validates :name,          presence: true
+  validates :classroom,     presence: true
+
   has_and_belongs_to_many :persons
 end

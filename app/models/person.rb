@@ -20,6 +20,9 @@ class Person
   field :last_login,  type:DateTime
 
 
+  validates :name,          presence: true
+  validates :password,      presence: true
+
   has_and_belongs_to_many :schedules
 
 end
