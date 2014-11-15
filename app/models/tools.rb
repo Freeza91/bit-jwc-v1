@@ -140,7 +140,6 @@ class Tools
     doc = doc.children.children.children #document-> Envelope-> Body
     doc = doc.children.children #GetScheduleListResponse -> GetScheduleListResult
     p doc.size
-    p doc
     i = 0
     schedule_list = []
     begin
@@ -156,7 +155,7 @@ class Tools
           p sub[4].text #老师
           list['teacher'] = sub[4].text
           p sub[5].text #地点
-          list['class_room'] = sub[5].text
+          list['classroom'] = sub[5].text
           p sub[6].text #星期
           list['week'] = sub[6].text
           p sub[7].text #上课时间
