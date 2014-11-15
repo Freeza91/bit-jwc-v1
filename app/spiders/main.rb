@@ -35,7 +35,7 @@ class Main
   end
 
   def store_mongo(ucmid, person, login_infor, lession, grade, schedule)
-    pp = Person.new(ucmid: person['ucmid'],
+    pp = Person.new(ucmid: ucmid,
                     name: person['username'],
                     sex: person['sex'],
                     school_num: person['school_num'],
@@ -46,7 +46,8 @@ class Main
                     grade: person['grade'],
                     no_grade: person['no_grade'],
                     no_grade_recode: person['no_grade_recode'],
-                    begin_time: person['begin_time'])
+                    begin_time: person['begin_time'],
+                    contract: login_infor['contract'])
     if pp.save
       lession.each do |k, v|
         pp.next_schedules << NextSchedule.new(code: k, name: v)

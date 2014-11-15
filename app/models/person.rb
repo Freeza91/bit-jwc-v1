@@ -7,6 +7,7 @@ class Person
   field :wechat,      type:String
   field :ucmid,       type:String
   field :image,       type:String
+  field :contract,    type:String
 
   field :class_num,   type:String
   field :academy,     type:String
@@ -16,14 +17,18 @@ class Person
   field :grade,       type:String
   field :no_grade,    type:String
   field :no_grade_recode, type:String
-
   field :last_login,  type:DateTime
 
-  embeds_many :next_schedules
 
   validates :name,          presence: true
   validates :school_num,    presence: true
+  validates :sex,           presence: true
+  validates :ucmid,         presence: true
+  validates :class_num,     presence: true
 
+  validates_uniqueness_of :school_num
+
+  embeds_many :next_schedules
   has_and_belongs_to_many :schedules
 
 end
