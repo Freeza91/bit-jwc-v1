@@ -140,32 +140,35 @@ class Tools
     doc = doc.children.children.children #document-> Envelope-> Body
     doc = doc.children.children #GetScheduleListResponse -> GetScheduleListResult
     p doc.size
+    p doc
     i = 0
-    schedule_list = {}
+    schedule_list = []
     begin
       doc.each do |e|
         i += 1
         sub = e.children
         if i > 14 && !sub[0].nil?
+          list = {}
           p sub[2].text #开始上课小节
-          schedule_list['start_at_num'] = sub[2].text
+          list['start_at_num'] = sub[2].text
           p sub[3].text #课程名字
-          schedule_list['subject_name'] = sub[3].text
+          list['name'] = sub[3].text
           p sub[4].text #老师
-          schedule_list['teacher'] = sub[4].text
+          list['teacher'] = sub[4].text
           p sub[5].text #地点
-          schedule_list['place'] = sub[5].text
+          list['class_room'] = sub[5].text
           p sub[6].text #星期
-          schedule_list['week'] = sub[6].text
+          list['week'] = sub[6].text
           p sub[7].text #上课时间
-          schedule_list['start_at_time'] = sub[7].text
+          list['start_at_time'] = sub[7].text
           p sub[9].text #班号
-          schedule_list['bid'] = sub[9].text
+          list['bid'] = sub[9].text
           p sub[10].text#班名字
-          schedule_list['bname'] = sub[10].text
+          list['bname'] = sub[10].text
           p sub[11].text#上课周期
-          schedule_list['period'] = sub[11].text
+          list['weeknum'] = sub[11].text
           p "*" * 30
+          schedule_list << list
         end
       end
     rescue Exception
