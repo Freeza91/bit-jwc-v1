@@ -18,7 +18,7 @@ class Schedule
   validates :bid,           presence: true
   validates :bname,         presence: true
   validates :start_at_num,  presence: true
-  validates :weeknum,       presence: true
+  validates :week,          presence: true
 
   has_and_belongs_to_many :persons
 
