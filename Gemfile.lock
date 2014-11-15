@@ -36,14 +36,6 @@ GEM
       sass (~> 3.2)
     bson (2.3.0)
     builder (3.2.2)
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-      mime-types (>= 1.16)
-    carrierwave-qiniu (0.1.5)
-      carrierwave
-      qiniu (~> 6.2.4)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     connection_pool (2.0.0)
@@ -101,11 +93,6 @@ GEM
       mini_portile (~> 0.6.0)
     optionable (0.2.0)
     origin (2.1.1)
-    qiniu (6.2.4)
-      json (~> 1.7)
-      mime-types (~> 1.19)
-      rest-client (~> 1.6)
-      ruby-hmac (~> 0.4)
     qiniu-rs (3.4.10)
       json (~> 1.7)
       mime-types (~> 1.19)
@@ -174,8 +161,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass
-  carrierwave
-  carrierwave-qiniu
   grape
   grape-swagger
   jbuilder (~> 2.0)

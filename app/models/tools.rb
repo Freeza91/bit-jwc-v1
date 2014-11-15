@@ -29,7 +29,7 @@ class Tools
       p doc[0].children[1].text #姓名-value
       person['username'] = doc[0].children[1].text
       p doc[1].children[1].text #学号
-      person['password'] = doc[1].children[1].text
+      person['school_num'] = doc[1].children[1].text
       p '-' * 30
       p doc[2].children[0].text #
       p doc[2].children[1].text #性别

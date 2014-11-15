@@ -7,7 +7,6 @@ class Person
   field :wechat,      type:String
   field :ucmid,       type:String
   field :image,       type:String
-  field :password,    type:String
 
   field :class_num,   type:String
   field :academy,     type:String
@@ -23,7 +22,7 @@ class Person
   embeds_many :next_schedules
 
   validates :name,          presence: true
-  validates :password,      presence: true
+  validates :school_num,    presence: true
 
   has_and_belongs_to_many :schedules
 

@@ -5,19 +5,25 @@ class Main
   def start
     #Uploader.new.upload("xxxxxxxx.jpg")
     #@s = Rufus::Scheduler.new
-    left = 40715#Settings.student_num_start.to_i
-    right = 40755#Settings.student_num_end.to_i
+    left = 40689#Settings.student_num_start.to_i
+    right = 40690#Settings.student_num_end.to_i
 
     left.upto(right)do |i|
-      sleep(2)
       begin
         person = Infors.get_study_status i
-        login_infor = Infors.login(person['username'], person['password'])
+        sleep(0.2)
+        login_infor = Infors.login(person['username'], person['school_num'])
+        sleep(0.2)
         lession = Infors.next_lesson i
+        sleep(0.2)
         exmp = Infors.exam i
+        sleep(0.2)
         grade = Infors.grade i
+        sleep(0.2)
         list = Infors.today_list i
+        sleep(0.2)
         schedule = Infors.schedule_list i
+        sleep(0.2)
       rescue Exception
         sleep(5)
         p "need redo "
@@ -29,23 +35,21 @@ class Main
   end
 
   def store_mongo(ucmid, person, login_infor, lession, grade, schedule)
-    p "username is !!!!"
-    p person['username']
     pp = Person.new(ucmid: person['ucmid'],
-                    name: person['username'].encode('utf-8'),
-                    sex: person['sex'].to_s,
-                    school_num: person[:school_num],
-                    password: person['password'],
+                    name: person['username'],
+                    sex: person['sex'],
+                    school_num: person['school_num'],
                     class_num: person['class_num'],
                     academy: person['academy'],
                     profession: person['profession'],
-                    period: person['period'], grade: person['grade'],
+                    period: person['period'],
+                    grade: person['grade'],
                     no_grade: person['no_grade'],
                     no_grade_recode: person['no_grade_recode'],
                     begin_time: person['begin_time'])
     if pp.save
       lession.each do |k, v|
-        pp.next_schedules << NextSchedule.new(name: k, code: v)
+        pp.next_schedules << NextSchedule.new(code: k, name: v)
         pp.save
       end
     else
