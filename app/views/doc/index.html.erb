@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Swagger UI</title>
+    <style>
+      .swagger-ui-wrap {
+        max-width: 80%;
+        min-width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+    <script>
+      $(function(){
+        $.ajaxPrefilter(function(o, options){
+          options.headers = { 'X-CSRF-Token': '#{form_authenticity_token.to_s}' }
+        });
+      });
+
+      $(function () {
+        window.swaggerUi = new SwaggerUi({
+          url: 'http://localhost:3000/api/v1/doc.json',
+          apiKey:"",
+          dom_id:"swagger-ui-container",
+          supportHeaderParams: false,
+          supportedSubmitMethods: ['get', 'post', 'put', 'delete']
+        });
+        window.swaggerUi.load();
+      });
+    </script>
+  </head>
+  <body>
+    <div class='swagger-ui-wrap' id='message-bar'>&nbsp;</div>
+    <div class='swagger-ui-wrap' id='swagger-ui-container'></div>
+  </body>
+</html>
