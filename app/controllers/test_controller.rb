@@ -1,6 +1,6 @@
 class TestController < ApplicationController
   def index
-    Infors.today_list(40689)
+    GetWeekSchedule.new.get_week_schedule 5
     render :text => "success"
   end
 end
