@@ -2,18 +2,18 @@ class Classroom
   attr_reader :at_cun, :at_xiang
   attr_accessor :xiaoqu, :limit_start_num
 
-  def initialize(xiaoqu="xiang")
+  def initialize(xiaoqu="cun")
 
     at_cun =<<-EOF
+      信1002 信1004 信1006 信1008 信1010 信2002 信2004 信2006 信2008 信2010 信3002
+      信3004 信3006 信3008 信3010 信4002 信4004 信4006 信4008 信4010 信5002 信5004
+      信5006 信5008 信5010 信6002 信6004 信6006
       3-308 3-310 3-311 3-312 3-313 3-314 3-315 3-318 3-324 3-325 3-327
       3-329 3-330 3-335 3-337 3-338
       3-341 3-401 3-402 3-404 3-406 3-407 3-408 3-410 3-411 3-412 3-413
       3-414 3-415 3-416 3-418 3-422 3-423 3-425 3-427 3-428 3-429 3-430
       3-434 3-435 3-436 3-437 3-438 3-440 4-333
       中211 中322 中328
-      信1002 信1004 信1006 信1008 信1010 信2002 信2004 信2006 信2008 信2010 信3002
-      信3004 信3006 信3008 信3010 信4002 信4004 信4006 信4008 信4010 信5002 信5004
-      信5006 信5008 信5010 信6002 信6004 信6006
     EOF
     @at_cun = at_cun.split
     at_xiang =<<-EOF
@@ -49,20 +49,20 @@ class Classroom
       6
     elsif h <= 17 && m < 35
       8
-    elsif h <= 9
-      11
     else
-      24
+      p h,m
+      11
     end
   end
 
   def get_classroom
     limit_num = get_limit_num
     list = WeekSchedule.where(:start_at_num.gte => limit_num)
-    first = second = third = fourth = fifth = []
+    first, second, third, fourth, fifth = [],[],[],[],[]
     list.each do |e|
-      if !e.nil?
+      if !e.nil? && @xiaoqu.include?(e.classroom)
         if e.start_at_num == 1
+          p "hello"
           first << e.classroom
         elsif e.start_at_num == 3
           second << e.classroom
@@ -74,9 +74,10 @@ class Classroom
           fifth << e.classroom
         end
       else
-        P "can not be nil!!"
+        p "pass!"
       end
     end
+
     look_unused_classroom(first, second, third, fourth, fifth)
   end
 
@@ -87,6 +88,7 @@ class Classroom
     c_ = @xiaoqu - c
     d_ = @xiaoqu - d
     e_ = @xiaoqu - e
+
     all_classroom = a_ | b_ | c_ | d_ | e_
     all_classroom.each do |e|
       hash = {}
@@ -100,7 +102,7 @@ class Classroom
     collection = add_weight(collection, c_ & d_, 2)
     collection = add_weight(collection, d_ & e_, 3)
 
-    p collection.sort_by{|e| e['weight']}
+    p collection.sort_by { |e| -1 * e['weight'] }
   end
 
   def add_weight(collection, arr, weight)
