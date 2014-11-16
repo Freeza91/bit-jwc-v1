@@ -1,6 +1,6 @@
 class TestController < ApplicationController
   def index
-    GetWeekSchedule.new.get_week_schedule 5
+    Classroom.new.get_classroom
     render :text => "success"
   end
 end
