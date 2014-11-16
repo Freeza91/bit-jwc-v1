@@ -1,6 +1,6 @@
 class Classroom
   attr_reader :at_cun, :at_xiang
-  attr_accessor :xiaoqu, :limit_start_num
+  attr_accessor :xiaoqu, :limit_num
 
   def initialize(xiaoqu="cun")
 
@@ -41,28 +41,26 @@ class Classroom
   def get_limit_num
     t = Time.now
     h, m = t.hour, t.min
-    if h <= 9 && m < 35
+    if h <= 9 && m < 20
       1
     elsif h <=12
       3
-    elsif h <= 14 && m < 55
+    elsif h <= 14 && m < 35
       6
-    elsif h <= 17 && m < 35
+    elsif h <= 17 && m < 50
       8
     else
-      p h,m
       11
     end
   end
 
   def get_classroom
-    limit_num = get_limit_num
-    list = WeekSchedule.where(:start_at_num.gte => limit_num)
+    p @limit_num = get_limit_num
+    list = WeekSchedule.where(:start_at_num.gte => @limit_num)
     first, second, third, fourth, fifth = [],[],[],[],[]
     list.each do |e|
       if !e.nil? && @xiaoqu.include?(e.classroom)
         if e.start_at_num == 1
-          p "hello"
           first << e.classroom
         elsif e.start_at_num == 3
           second << e.classroom
@@ -77,7 +75,11 @@ class Classroom
         p "pass!"
       end
     end
-
+    first = @xiaoqu if first.size == 0
+    second = @xiaoqu if second.size == 0
+    third = @xiaoqu if third.size == 0
+    fourth = @xiaoqu if fourth.size == 0
+    fifth = @xiaoqu if fifth.size == 0
     look_unused_classroom(first, second, third, fourth, fifth)
   end
 
@@ -97,12 +99,14 @@ class Classroom
       collection << hash
     end
 
-    collection = add_weight(collection, a_ & b_, 2)
-    collection = add_weight(collection, b_ & c_, 1)
-    collection = add_weight(collection, c_ & d_, 2)
-    collection = add_weight(collection, d_ & e_, 3)
+    collection = add_weight(collection, a_ & b_, 0.9)
+    collection = add_weight(collection, b_ & c_, 1.0)
+    collection = add_weight(collection, c_ & d_, 1.2)
+    collection = add_weight(collection, d_ & e_, 1.5)
 
-    p collection.sort_by { |e| -1 * e['weight'] }
+    collection.sort_by! { |e| -1 * e['weight'] }
+
+    p add_time_details(collection)
   end
 
   def add_weight(collection, arr, weight)
@@ -113,6 +117,34 @@ class Classroom
           break
         end
       end
+    end
+    collection
+  end
+
+  def add_time_details(collection)
+    time_category = {}
+    if @limit_num == 5 || @limit_num == 1
+      time_category['0.0'] =  "第#{@limit_num}-#{@limit_num + 1}节可去"
+    else
+      time_category['0.0'] =  "第#{@limit_num}-#{@limit_num + 2}节可去"
+    end
+    time_category['0.9'] = "上午可去"
+    time_category['1.0'] = "第3-7节可去"
+    time_category['1.2'] = "下午可去"
+    time_category['1.5'] = "晚上可去"
+    time_category['1.9'] = "第1-7节可去"
+    time_category['2.1'] = "第1-5,8-10节可去"
+    time_category['2.4'] = "第1-5,8-13节可去"
+    time_category['2.2'] = "第3-10节可去"
+    time_category['2.5'] = "第3-13节可去"
+    time_category['2.7'] = "第6-13节可去"
+    time_category['3.1'] = "第1-10节可去"
+    time_category['3.4'] = "全天可去"
+    time_category['3.6'] = '全天可去'
+    time_category['3.7'] = "第3-13节可去"
+    time_category['4.6'] = "全天可去"
+    collection.each do |hash|
+      hash['time_category'] = time_category[hash['weight'].to_f.round(1).to_s]
     end
     collection
   end
