@@ -41,13 +41,14 @@ class Classroom
   def get_limit_num
     t = Time.now
     h, m = t.hour, t.min
-    if h <= 9 && m < 20
+    time = h * 60 + m
+    if time <= 9 * 60 + 20
       1
-    elsif h <=12
+    elsif time <= 12 * 60
       3
-    elsif h <= 14 && m < 35
+    elsif time <= 14 * 60 + 35
       6
-    elsif h <= 17 && m < 50
+    elsif time <= 17 * 60 + 50
       8
     else
       11
