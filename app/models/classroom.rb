@@ -57,7 +57,7 @@ class Classroom
 
   def get_classroom
     @limit_num = get_limit_num
-    list = WeekSchedule.where(:start_at_num.gte => @limit_num)
+    list = TodaySchedule.where(:start_at_num.gte => @limit_num)
     first, second, third, fourth, fifth = [],[],[],[],[]
     list.each do |e|
       if !e.nil? && @xiaoqu.include?(e.classroom)
