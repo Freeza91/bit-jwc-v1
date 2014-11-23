@@ -56,7 +56,7 @@ class Classroom
   end
 
   def get_classroom
-    p @limit_num = get_limit_num
+    @limit_num = get_limit_num
     list = WeekSchedule.where(:start_at_num.gte => @limit_num)
     first, second, third, fourth, fifth = [],[],[],[],[]
     list.each do |e|
@@ -92,60 +92,67 @@ class Classroom
     d_ = @xiaoqu - d
     e_ = @xiaoqu - e
 
-    all_classroom = a_ | b_ | c_ | d_ | e_
-    all_classroom.each do |e|
-      hash = {}
-      hash['weight'] = 0
-      hash['classroom'] = e
-      collection << hash
-    end
+    collection = []
+    collection = add_weight_for_classroom(a_, collection, 0.1, 1)
+    collection = add_weight_for_classroom(b_, collection, 0.15,3)
+    collection = add_weight_for_classroom(c_, collection, 0.2, 6)
+    collection = add_weight_for_classroom(d_, collection, 0.2, 8)
+    collection = add_weight_for_classroom(e_, collection, 0.3, 11)
 
-    collection = add_weight(collection, a_ & b_, 0.9)
-    collection = add_weight(collection, b_ & c_, 1.0)
-    collection = add_weight(collection, c_ & d_, 1.2)
-    collection = add_weight(collection, d_ & e_, 1.5)
-
-    collection.sort_by! { |e| -1 * e['weight'] }
+    collection = add_weight_for_classroom(a_ & b_, collection, 0.9)
+    collection = add_weight_for_classroom(b_ & c_, collection, 1.0)
+    collection = add_weight_for_classroom(c_ & d_, collection, 1.2)
+    collection = add_weight_for_classroom(d_ & e_, collection, 1.5)
+    collection.sort_by! { |e| e[e.keys.first]['weight'] * -1}
 
     p add_time_details(collection)
   end
 
-  def add_weight(collection, arr, weight)
+  def add_weight_for_classroom(arr, collection, weight, num=0)
+    hash = {}
     arr.each do |e|
-      collection.each_with_index do |hash, k|
-        if hash['classroom'] == e
-          collection[k]['weight'] += weight
+      flag = false
+      collection.each do |collect|
+        if collect.keys.first == e
+          collect[e]['weight'] += weight
+          collect[e]['list'] << num if num != 0
+          flag = true
           break
         end
+      end
+      unless flag
+        hash_out = {}
+        hash_in  = {}
+        hash_in['weight'] = weight
+        hash_in['list'] = [num]
+        hash_out[e] = hash_in
+        collection << hash_out
       end
     end
     collection
   end
 
   def add_time_details(collection)
-    time_category = {}
-    if @limit_num == 5 || @limit_num == 1
-      time_category['0.0'] =  "第#{@limit_num}-#{@limit_num + 1}节可去"
-    else
-      time_category['0.0'] =  "第#{@limit_num}-#{@limit_num + 2}节可去"
-    end
-    time_category['0.9'] = "上午可去"
-    time_category['1.0'] = "第3-7节可去"
-    time_category['1.2'] = "下午可去"
-    time_category['1.5'] = "晚上可去"
-    time_category['1.9'] = "第1-7节可去"
-    time_category['2.1'] = "第1-5,8-10节可去"
-    time_category['2.4'] = "第1-5,8-13节可去"
-    time_category['2.2'] = "第3-10节可去"
-    time_category['2.5'] = "第3-13节可去"
-    time_category['2.7'] = "第6-13节可去"
-    time_category['3.1'] = "第1-10节可去"
-    time_category['3.4'] = "全天可去"
-    time_category['3.6'] = '全天可去'
-    time_category['3.7'] = "第3-13节可去"
-    time_category['4.6'] = "全天可去"
-    collection.each do |hash|
-      hash['time_category'] = time_category[hash['weight'].to_f.round(1).to_s]
+    collection.each do |collect|
+      arr = collect[collect.keys.first]['list']
+      collect['time_category'] = "第"
+      arr.each do |e|
+        collect['time_category'] +=
+        case e
+          when 1
+            "1-2,"
+          when 3
+            "3-5,"
+          when 6
+            "6-7,"
+          when 8
+            "8-10,"
+          when 11
+            "11-13,"
+        end
+      end
+      collect['time_category'] = collect['time_category'].chop!
+      collect['time_category'] += "节课可去"
     end
     collection
   end
