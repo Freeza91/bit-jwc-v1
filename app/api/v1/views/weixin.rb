@@ -83,7 +83,7 @@ module V1
         builder.doc.root.children
       end
 
-      def article_reply(num=0, title=[], description=[], picurl=[], url=[])
+      def article_reply(num=0, hash = {})
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.root {
             xml.ToUserName    "<![CDATA[%s]]>" % @params['FromUserName']
@@ -94,10 +94,10 @@ module V1
             xml.Articles {
               1.upto(num) do |i|
                 xml.item {
-                  xml.Title       "<![CDATA[%s]]>" % title[i-1]
-                  xml.Description "<![CDATA[%s]]>" % description[i-1]
-                  xml.PicUrl      "<![CDATA[%s]]>" % picurl[i-1]
-                  xml.Url         "<![CDATA[%s]]>" % url[i-1]
+                  xml.Title       "<![CDATA[%s]]>" % hash[i-1]['title']
+                  xml.Description "<![CDATA[%s]]>" % hash[i-1]['description']
+                  xml.PicUrl      "<![CDATA[%s]]>" % hash[i-1]['picurl']
+                  xml.Url         "<![CDATA[%s]]>" % hash[i-1]['url']
                 }
               end
             }
