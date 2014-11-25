@@ -32,9 +32,28 @@ module V1
 
     post '/' do
       @params = Hash.from_xml(request.body.read)['xml']
-      text
+      case @params['MsgType']
+      when "event"
+        case @params['Event']
+        when "subscribe"
+          subscribe
+        when "unsubscribe"
+          unsubscribe
+        end
+      when "text"
+        text(@params['Content'])
+      when "image"
+        "此功能正在开发中"
+      when "voice"
+        "此功能正在开发中"
+      when "video"
+        "此功能正在开发中"
+      when "location"
+        "此功能正在开发中"
+      when "link"
+        "此功能正在开发中"
+      end
     end
-
     #add_swagger_documentation mount_path: 'doc.xml', base_path: 'api', api_version: 'v1'
   end
 end
