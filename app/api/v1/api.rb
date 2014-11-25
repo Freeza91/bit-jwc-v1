@@ -24,6 +24,10 @@ module V1
       #http://localhost:8080/api/v1?
       #signature=9957b6ad3a6ca36a8469e0d3f121cac5e4eacf39&echostr=75661286dsds49082288830&timestamp=1416899262&nonce=852791110
       text
+
+      #test
+      #1: https://mp.weixin.qq.com/debug/cgi-bin/apiinfo?t=index&type=%E6%B6%88%E6%81%AF%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95&form=%E6%96%87%E6%9C%AC%E6%B6%88%E6%81%AF
+      #2: https://ngrok.com/
     end
 
     post '/' do
