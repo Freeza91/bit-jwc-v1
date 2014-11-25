@@ -7,11 +7,11 @@ module V1
       def text_reply(content="")
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.root {
-            xml.ToUserName    "<![CDATA[%s]]>" % params['FromUserName']
-            xml.FromUserName  "<![CDATA[%s]]>" % params['ToUserName']
+            xml.ToUserName    "<![CDATA[%s]]>" % @params['FromUserName']
+            xml.FromUserName  "<![CDATA[%s]]>" % @params['ToUserName']
             xml.MsgType       "<![CDATA[%s]]>" % "text"
             xml.CreateTime    "<![CDATA[%d]]>" % Time.now.to_i
-            xml.Content       "<![CDATA[%s]]>" % "content"
+            xml.Content       "<![CDATA[%s]]>" % content
         }
         end
         builder.doc.root.children
@@ -20,8 +20,8 @@ module V1
       def image_reply(media_id="")
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.root {
-            xml.ToUserName    "<![CDATA[%s]]>" % params['FromUserName']
-            xml.FromUserName  "<![CDATA[%s]]>" % params['ToUserName']
+            xml.ToUserName    "<![CDATA[%s]]>" % @params['FromUserName']
+            xml.FromUserName  "<![CDATA[%s]]>" % @params['ToUserName']
             xml.MsgType       "<![CDATA[%s]]>" % "image"
             xml.CreateTime    "<![CDATA[%d]]>" % Time.now.to_i
             xml.Image {
@@ -35,8 +35,8 @@ module V1
       def vocie_reply(media_id="")
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.root {
-            xml.ToUserName    "<![CDATA[%s]]>" % params['FromUserName']
-            xml.FromUserName  "<![CDATA[%s]]>" % params['ToUserName']
+            xml.ToUserName    "<![CDATA[%s]]>" % @params['FromUserName']
+            xml.FromUserName  "<![CDATA[%s]]>" % @params['ToUserName']
             xml.MsgType       "<![CDATA[%s]]>" % "voice"
             xml.CreateTime    "<![CDATA[%d]]>" % Time.now.to_i
             xml.Voice {
@@ -50,8 +50,8 @@ module V1
       def video_reply(media_id="", title="", description="")
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.root {
-            xml.ToUserName    "<![CDATA[%s]]>" % params['FromUserName']
-            xml.FromUserName  "<![CDATA[%s]]>" % params['ToUserName']
+            xml.ToUserName    "<![CDATA[%s]]>" % @params['FromUserName']
+            xml.FromUserName  "<![CDATA[%s]]>" % @params['ToUserName']
             xml.MsgType       "<![CDATA[%s]]>" % "video"
             xml.CreateTime    "<![CDATA[%d]]>" % Time.now.to_i
             xml.Video {
@@ -67,8 +67,8 @@ module V1
       def music_reply(title="", description="", musicurl="", hqmusicUrl="", thumbmediaId="")
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.root {
-            xml.ToUserName    "<![CDATA[%s]]>" % params['FromUserName']
-            xml.FromUserName  "<![CDATA[%s]]>" % params['ToUserName']
+            xml.ToUserName    "<![CDATA[%s]]>" % @params['FromUserName']
+            xml.FromUserName  "<![CDATA[%s]]>" % @params['ToUserName']
             xml.MsgType       "<![CDATA[%s]]>" % "music"
             xml.CreateTime    "<![CDATA[%d]]>" % Time.now.to_i
             xml.Music {
@@ -86,8 +86,8 @@ module V1
       def article_reply(num=0, title=[], description=[], picurl=[], url=[])
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.root {
-            xml.ToUserName    "<![CDATA[%s]]>" % params['FromUserName']
-            xml.FromUserName  "<![CDATA[%s]]>" % params['FromUserName']
+            xml.ToUserName    "<![CDATA[%s]]>" % @params['FromUserName']
+            xml.FromUserName  "<![CDATA[%s]]>" % @params['FromUserName']
             xml.MsgType       "<![CDATA[%s]]>" % "news"
             xml.CreateTime    "<![CDATA[%d]]>" % Time.now.to_i
             xml.ArticleCount  "<![CDATA[%d]]>" % num
