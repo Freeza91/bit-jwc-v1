@@ -25,5 +25,9 @@ module V1
       p "hello tel list"
     end
 
+    def help_infor
+      p "this is help infor "
+    end
+
   end
 end

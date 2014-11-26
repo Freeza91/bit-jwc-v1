@@ -7,18 +7,20 @@ module V1
     def text(content)
       res = \
         case content
-        when "教室"
+        when /教+|室+/
           classroom_list
-        when "课表"
+        when /课+|表+/
           schedule_list
-        when "成绩"
+        when /成+|绩+/
           grape_list
-        when "通知"
+        when /通+|知+/
           news_list
-        when "下学期"
+        when /下+|学+|期+/
           next_schedule
-        when "电话"
+        when /电+|话+/
           tel_list
+        else
+          help_infor
         end
 
         text_reply(res)
