@@ -1,35 +1,40 @@
 #encoding: utf-8
 require 'rufus-scheduler'
 class Main
+  include InforsHelper
 
   def start
-    #Uploader.new.upload("xxxxxxxx.jpg")
+    #Qiniu.new.upload("xxxxxxxx.jpg")
     #@s = Rufus::Scheduler.new
-    left = 40689#Settings.student_num_start.to_i
-    right = 40790#Settings.student_num_end.to_i
-
+    left = 38900#Settings.student_num_start.to_i
+    right = 38902#Settings.student_num_end.to_i
+    try = 0
     left.upto(right)do |i|
+      if try > 5
+        next
+      end
       begin
-        person = Infors.get_study_status i
+        person = get_study_status i
         sleep(0.1)
-        login_infor = Infors.login(person['username'], person['school_num'])
+        login_infor = login(person['username'], person['school_num'])
         sleep(0.1)
-        lession = Infors.next_lesson i
+        lession = next_lesson i
         sleep(0.1)
-        exmp = Infors.exam i
+        exmp = exam i
         sleep(0.1)
-        grade = Infors.grade i
+        grade = grade i
         sleep(0.1)
-        list = Infors.today_list i
+        list = today_list i
         sleep(0.1)
-        schedule = Infors.schedule_list i
+        schedule = schedule_list i
       rescue Exception
+        try += 1
         sleep(2)
         p "need redo "
         redo
       else
+        try = 0
         store_mongo(i, person, login_infor, lession, grade, schedule)
-
       end
     end
   end
