@@ -1,21 +1,32 @@
 #encoding: utf-8
-require 'rufus-scheduler'
+
 class Main
   include InforsHelper
 
   def start
     #Qiniu.new.upload("xxxxxxxx.jpg")
     #@s = Rufus::Scheduler.new
-    left = 38900#Settings.student_num_start.to_i
-    right = 38902#Settings.student_num_end.to_i
+    left = 35075 #Settings.student_num_start.to_i
+    right = 35077 #Settings.student_num_end.to_i
     try = 0
+    flag = 0
     left.upto(right)do |i|
+      p "current num is #{i}"
       if try > 5
+        next
+      end
+      if flag > 3
         next
       end
       begin
         person = get_study_status i
         sleep(0.1)
+        if person['username'].blank?
+          flag += 1
+          sleep(20)
+          redo
+        end
+        flag = 0
         login_infor = login(person['username'], person['school_num'])
         sleep(0.1)
         lession = next_lesson i
@@ -29,7 +40,7 @@ class Main
         schedule = schedule_list i
       rescue Exception
         try += 1
-        sleep(2)
+        sleep(20)
         p "need redo "
         redo
       else
@@ -51,7 +62,7 @@ class Main
                     period: person['period'],
                     grade: person['grade'],
                     no_grade: person['no_grade'],
-                    no_grade_recode: person['no_grade_recode'],
+                    no_grade_recode: person['no_grade_record'],
                     begin_time: person['begin_time'],
                     contract: login_infor['contract'])
     if pp.save
@@ -80,12 +91,12 @@ class Main
           ss.persons.uniq!
           if ss.save
           else
-            p "can not save schedule"
+            p "can not save schedule reason is #{ss.errors.messages}"
           end
         end
       end
     else
-      p "can not person save!!?!!!"
+      p "can not person save!!?!!! reason is #{pp.errors.messages}"
     end
     rescue Exception
       p "not store db"

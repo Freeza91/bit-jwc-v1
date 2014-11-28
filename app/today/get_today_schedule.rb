@@ -14,7 +14,7 @@ class GetTodaySchedule #get current week schedule and drop old schedule
       if current_week.between?(start_week.to_i, end_week.to_i) && today == e.week.to_i
         place = e.classroom.split('/').last
         if places.include? place
-          week_schedule = WeekSchedule.new(start_at_num: e.start_at_num.to_i,
+          week_schedule = TodaySchedule.new(start_at_num: e.start_at_num.to_i,
                            classroom: place)
           if week_schedule.save
             p "save week_schedule"
