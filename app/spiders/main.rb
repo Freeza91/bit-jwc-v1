@@ -13,9 +13,11 @@ class Main
     left.upto(right)do |i|
       p "current num is #{i}"
       if try > 5
+        try = 0
         next
       end
       if flag > 3
+        flag = 0
         next
       end
       begin
